@@ -1,36 +1,44 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🌌 Interstellar Developer Portfolio
 
-## Getting Started
+A breathtaking, interactive 3D developer portfolio built with React Three Fiber, Next.js, and Tailwind CSS. 
 
-First, run the development server:
+Take your visitors on a cinematic journey through multiple galaxies, explore interactive planetary nodes, and plunge through a black hole—all seamlessly rendered in WebGL.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## 🚀 Features
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- **Immersive 3D Universe**: A fully realized 3D space environment complete with an asteroid belt, starfields, dynamic lighting, and cinematic post-processing (Bloom).
+- **Interactive Navigation**: Clickable planets act as navigation nodes. Hovering triggers dynamic effects like coronal blasts and planetary scaling.
+- **Multi-Galaxy Travel**: Scroll to travel smoothly from the Solar System to the Eridani System using a custom spline-based camera rig.
+- **Black Hole Transition**: At the end of the journey, travel directly into a stunning black hole accretion disk to trigger a pure-white hyper-contact interface.
+- **Gamified Elements**: Collect data probes scattered throughout the asteroid fields to unlock hidden lore or developer fun facts.
+- **Mobile Responsive & Performant**: Uses distance-based culling, optimized textures, and 3D sprite billboarding to ensure smooth WebGL performance and layout stability across desktop and mobile.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 🛠️ Tech Stack
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- **Framework**: [Next.js 14](https://nextjs.org/)
+- **3D Engine**: [Three.js](https://threejs.org/)
+- **React Abstraction**: [React Three Fiber](https://docs.pmnd.rs/react-three-fiber/) & [Drei](https://github.com/pmndrs/drei)
+- **Styling**: [Tailwind CSS](https://tailwindcss.com/)
+- **State Management**: Zustand
 
-## Learn More
+## 🛸 Getting Started
 
-To learn more about Next.js, take a look at the following resources:
+1. **Install Dependencies**
+   ```bash
+   npm install
+   ```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+2. **Run the Development Server**
+   ```bash
+   npm run dev
+   ```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+3. **Explore**
+   Open [http://localhost:3000](http://localhost:3000) in your browser and start scrolling!
 
-## Deploy on Vercel
+## 🎮 Controls
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- **Scroll**: Move the camera forward and backward through the cosmos.
+- **Click Planets**: Open the interactive HUD sidebar to view Projects, Skills, About Me, and Experience.
+- **Click Data Probes**: Collect hidden floating beacons.
+- **Free Look**: When no side panel is open, the camera will auto-rotate slightly, simulating a dynamic cockpit view.
