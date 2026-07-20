@@ -23,55 +23,11 @@ export default function EridaniPlanet() {
   useFrame((state) => {
     if (sphereRef.current) {
       sphereRef.current.rotation.y += 0.002;
-      
-      const targetScale = hovered ? 1.05 : 1;
-      sphereRef.current.scale.lerp(new THREE.Vector3(targetScale, targetScale, targetScale), 0.1);
-    }
-    
-    if (blastTimeRef.current === -1) {
-      blastTimeRef.current = state.clock.elapsedTime;
-    }
-
-    // Blast Ring Logic
-    if (blastTimeRef.current > 0 && blastRef.current) {
-      const elapsed = state.clock.elapsedTime - blastTimeRef.current;
-      if (elapsed < 1.0) {
-        // Expand rapidly
-        const currentScale = 1 + (elapsed * 5); // scales from 1 to 6
-        blastRef.current.scale.set(currentScale, currentScale, currentScale);
-        
-        // Fade out
-        const material = blastRef.current.material as THREE.MeshBasicMaterial;
-        material.opacity = Math.max(0, 0.8 - (elapsed * 0.8));
-        blastRef.current.visible = true;
-      } else {
-        blastRef.current.visible = false;
-        blastTimeRef.current = 0; // Reset blast
-      }
     }
   });
 
-  const triggerBlast = () => {
-    blastTimeRef.current = -1;
-  };
-
   return (
-    <group
-      onPointerDown={(e) => {
-        e.stopPropagation();
-        setActiveSection('experience');
-        triggerBlast();
-      }}
-      onPointerOver={(e) => {
-        e.stopPropagation();
-        setHovered(true);
-        document.body.style.cursor = 'pointer';
-      }}
-      onPointerOut={() => {
-        setHovered(false);
-        document.body.style.cursor = 'auto';
-      }}
-    >
+    <group>
       <mesh ref={sphereRef}>
         <sphereGeometry args={[3, 64, 64]} />
         <meshStandardMaterial
@@ -106,18 +62,6 @@ export default function EridaniPlanet() {
             blending={THREE.AdditiveBlending} 
           />
         </mesh>
-      </mesh>
-
-      {/* Blast Effect Ring */}
-      <mesh ref={blastRef} visible={false}>
-        <sphereGeometry args={[3.1, 64, 64]} />
-        <meshBasicMaterial 
-          color="#10b981" 
-          transparent 
-          opacity={0} 
-          side={THREE.DoubleSide}
-          blending={THREE.AdditiveBlending} 
-        />
       </mesh>
 
       {/* Experience Label */}
