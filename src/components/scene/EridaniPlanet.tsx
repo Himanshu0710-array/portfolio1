@@ -11,7 +11,7 @@ export default function EridaniPlanet() {
   const blastRef = useRef<THREE.Mesh>(null);
   
   const [hovered, setHovered] = useState(false);
-  const [blastTime, setBlastTime] = useState(0);
+  const blastTimeRef = useRef(0);
   
   const { setActiveSection, activeSection } = useSceneStore();
   const isFocused = activeSection === 'experience';
@@ -28,9 +28,13 @@ export default function EridaniPlanet() {
       sphereRef.current.scale.lerp(new THREE.Vector3(targetScale, targetScale, targetScale), 0.1);
     }
     
+    if (blastTimeRef.current === -1) {
+      blastTimeRef.current = state.clock.elapsedTime;
+    }
+
     // Blast Ring Logic
-    if (blastTime > 0 && blastRef.current) {
-      const elapsed = state.clock.elapsedTime - blastTime;
+    if (blastTimeRef.current > 0 && blastRef.current) {
+      const elapsed = state.clock.elapsedTime - blastTimeRef.current;
       if (elapsed < 1.0) {
         // Expand rapidly
         const currentScale = 1 + (elapsed * 5); // scales from 1 to 6
@@ -42,20 +46,14 @@ export default function EridaniPlanet() {
         blastRef.current.visible = true;
       } else {
         blastRef.current.visible = false;
-        setBlastTime(0); // Reset blast
+        blastTimeRef.current = 0; // Reset blast
       }
     }
   });
 
   const triggerBlast = () => {
-    setBlastTime(-1);
+    blastTimeRef.current = -1;
   };
-
-  useFrame((state) => {
-    if (blastTime === -1) {
-      setBlastTime(state.clock.elapsedTime);
-    }
-  });
 
   return (
     <group

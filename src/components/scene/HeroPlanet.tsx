@@ -13,7 +13,7 @@ export default function HeroStar() {
   const blastRef = useRef<THREE.Mesh>(null);
   
   const [hovered, setHovered] = useState(false);
-  const [blastTime, setBlastTime] = useState(0);
+  const blastTimeRef = useRef(0);
 
   // Load Sun texture
   const colorMap = useTexture('/textures/sun.jpg');
@@ -40,9 +40,14 @@ export default function HeroStar() {
       lightRef.current.intensity = THREE.MathUtils.lerp(lightRef.current.intensity, targetIntensity, 0.1);
     }
 
+    // Initialize blast time
+    if (blastTimeRef.current === -1) {
+      blastTimeRef.current = state.clock.elapsedTime;
+    }
+
     // Blast Ring Logic
-    if (blastTime > 0 && blastRef.current) {
-      const elapsed = state.clock.elapsedTime - blastTime;
+    if (blastTimeRef.current > 0 && blastRef.current) {
+      const elapsed = state.clock.elapsedTime - blastTimeRef.current;
       if (elapsed < 1.0) {
         // Expand rapidly
         const currentScale = 1 + (elapsed * 5); // scales from 1 to 6
@@ -54,24 +59,14 @@ export default function HeroStar() {
         blastRef.current.visible = true;
       } else {
         blastRef.current.visible = false;
-        setBlastTime(0); // Reset blast
+        blastTimeRef.current = 0; // Reset blast
       }
     }
   });
 
   const triggerBlast = () => {
-    // Reset the time based on ThreeJS clock is tricky without ref to it, 
-    // but setting it triggers the blast in useFrame. We use Date.now() / 1000 to track it relatively if needed.
-    // Instead, we can just use a random trigger flag or set the blast time to a negative number to signal start.
-    // Let's just use state to signal useFrame to grab the current state.clock.elapsedTime
-    setBlastTime(-1); // special flag
+    blastTimeRef.current = -1; // special flag
   };
-
-  useFrame((state) => {
-    if (blastTime === -1) {
-      setBlastTime(state.clock.elapsedTime);
-    }
-  });
 
   return (
     <Float speed={1} rotationIntensity={0.1} floatIntensity={0.2}>
