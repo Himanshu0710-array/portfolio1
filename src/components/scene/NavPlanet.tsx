@@ -136,10 +136,13 @@ export default function NavPlanet({
             sprite
             distanceFactor={15}
             wrapperClass="pointer-events-none"
-            style={{ pointerEvents: 'none' }}
           >
             <div
-              className={`bg-black/80 backdrop-blur-md border border-white/30 px-4 py-1.5 rounded-full whitespace-nowrap text-white text-sm font-bold tracking-widest shadow-[0_0_15px_rgba(255,255,255,0.2)] transition-all duration-300 ${isAnotherFocused ? 'opacity-0 scale-90' : 'opacity-100 scale-100'}`}
+              onPointerDown={(e) => {
+                e.stopPropagation();
+                setActiveSection(section);
+              }}
+              className={`pointer-events-auto cursor-pointer bg-black/80 backdrop-blur-md border border-white/30 px-4 py-1.5 rounded-full whitespace-nowrap text-white text-sm font-bold tracking-widest shadow-[0_0_15px_rgba(255,255,255,0.2)] transition-all duration-300 ${isAnotherFocused ? 'opacity-0 scale-90' : 'opacity-100 scale-100'}`}
             >
               {label}
             </div>
