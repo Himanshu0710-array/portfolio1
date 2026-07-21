@@ -6,7 +6,10 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { FaVolumeUp, FaVolumeMute } from 'react-icons/fa';
 
 export default function HUD() {
-  const { activeSection, isLoaded, isAudioEnabled, toggleAudio } = useSceneStore();
+  const { activeSection, isLoaded, isAudioEnabled, toggleAudio, blackHoleProgress } = useSceneStore();
+  
+  // Fade out the main text when scrolling away from the first galaxy
+  const showHeader = blackHoleProgress < 0.15;
 
   return (
     <AnimatePresence>
@@ -19,7 +22,7 @@ export default function HUD() {
           className="pointer-events-none absolute inset-0 z-10 flex flex-col items-center justify-between p-4 md:p-8"
         >
           {/* Header */}
-          <div className="text-center pt-8 md:pt-10">
+          <div className="text-center pt-8 md:pt-10 transition-opacity duration-700" style={{ opacity: showHeader ? 1 : 0 }}>
             <h1 className="text-3xl sm:text-4xl md:text-6xl font-bold tracking-tighter text-white drop-shadow-[0_0_15px_rgba(255,255,255,0.5)]">
               {portfolioData.hero.name}
             </h1>
@@ -41,7 +44,7 @@ export default function HUD() {
               {isAudioEnabled ? <FaVolumeUp size={16} className="md:w-5 md:h-5" /> : <FaVolumeMute size={16} className="md:w-5 md:h-5" />}
             </button>
 
-            <div className="flex flex-col items-center animate-pulse">
+            <div className="flex flex-col items-center animate-pulse transition-opacity duration-700" style={{ opacity: showHeader ? 1 : 0 }}>
               <span className="text-[10px] md:text-sm font-medium tracking-widest text-white/70 uppercase">
                 Click a planet to explore
               </span>
