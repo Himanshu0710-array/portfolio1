@@ -5,6 +5,7 @@ import LoadingScreen from '@/components/ui/LoadingScreen';
 import HUD from '@/components/ui/HUD';
 import SectionPanel from '@/components/ui/SectionPanel';
 import CursorTrail from '@/components/ui/CursorTrail';
+import DotNav from '@/components/ui/DotNav';
 import AudioController from '@/components/scene/AudioController';
 import { useSceneStore, Section } from '@/store/useSceneStore';
 import { useEffect } from 'react';
@@ -23,8 +24,10 @@ export default function Home() {
       <LoadingScreen />
       <CursorTrail />
       <HUD />
+      <DotNav />
       <Scene />
       <SectionPanel />
     </main>
   );
 }
+

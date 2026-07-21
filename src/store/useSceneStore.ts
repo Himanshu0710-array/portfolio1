@@ -14,6 +14,8 @@ interface SceneState {
   probesFound: number;
   collectedProbeIds: string[];
   collectProbe: (id: string) => void;
+  scrollElement: HTMLElement | null;
+  setScrollElement: (el: HTMLElement | null) => void;
 }
 
 export const useSceneStore = create<SceneState>((set) => ({
@@ -33,5 +35,7 @@ export const useSceneStore = create<SceneState>((set) => ({
       collectedProbeIds: [...state.collectedProbeIds, id],
       probesFound: state.probesFound + 1
     };
-  })
+  }),
+  scrollElement: null,
+  setScrollElement: (el) => set({ scrollElement: el }),
 }));

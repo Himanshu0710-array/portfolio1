@@ -15,17 +15,19 @@ import InterstellarRocket from './InterstellarRocket';
 import EridaniPlanet from './EridaniPlanet';
 import BlackHoleOverlay from './BlackHoleOverlay';
 import DataProbe from './DataProbe';
-import WarpNode from './WarpNode';
 import { useSceneStore } from '@/store/useSceneStore';
 import { Suspense, useRef, useEffect } from 'react';
 
 function MobileScrollFix() {
   const scroll = useScroll();
+  const { setScrollElement } = useSceneStore();
   useEffect(() => {
     if (scroll && scroll.el) {
       scroll.el.style.pointerEvents = 'auto';
+      setScrollElement(scroll.el);
     }
-  }, [scroll]);
+    return () => setScrollElement(null);
+  }, [scroll, setScrollElement]);
   return null;
 }
 
@@ -102,9 +104,6 @@ export default function Scene() {
                 speed={0.9} 
                 orbitOffset={(Math.PI * 2) / 3} 
               />
-              
-              {/* Warp to Eridani - placed below and ahead of the hero planet, centered for mobile */}
-              <WarpNode position={[0, -2, -5]} targetOffset={0.6} label="Warp to Eridani System" color="#a855f7" />
             </group>
 
             <group position={[0, 0, -100]}>
@@ -121,10 +120,6 @@ export default function Scene() {
                 size={0.6}
                 hasRing
               />
-              
-              {/* Warp points from Eridani - centered for mobile visibility */}
-              <WarpNode position={[-3, 2, 8]} targetOffset={0} label="Return to Solar System" color="#3b82f6" />
-              <WarpNode position={[3, -2, -8]} targetOffset={1} label="Warp to Black Hole" color="#ef4444" />
             </group>
 
             <group position={[0, 0, -150]}>
@@ -156,10 +151,6 @@ export default function Scene() {
                 <meshBasicMaterial color="#ffffff" toneMapped={false} />
               </mesh>
               <pointLight position={[0, 0, -5]} distance={30} intensity={5} color="#ffffff" />
-              
-              {/* Escape Warp Nodes - centered and placed after the white hole so camera sees them */}
-              <WarpNode position={[-2, 1, -25]} targetOffset={0.6} label="Escape to Eridani" color="#a855f7" />
-              <WarpNode position={[2, -1, -25]} targetOffset={0} label="Escape to Solar System" color="#3b82f6" />
             </group>
 
             <CameraRig />
@@ -177,3 +168,4 @@ export default function Scene() {
     </div>
   );
 }
+
