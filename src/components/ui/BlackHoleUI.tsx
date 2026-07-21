@@ -103,30 +103,32 @@ export default function BlackHoleUI() {
       {/* White Hole Contact Hologram */}
       {showWhiteHoleContent && (
         <div 
-          className="pointer-events-auto absolute inset-0 flex items-center justify-center animate-fade-in p-4 md:p-8"
-          onWheel={(e) => e.stopPropagation()}
-          onTouchMove={(e) => e.stopPropagation()}
+          className="pointer-events-auto absolute inset-0 flex items-center justify-center animate-fade-in p-3 md:p-8"
         >
-          <div className="bg-black/40 backdrop-blur-xl border border-white/20 p-6 md:p-10 rounded-2xl max-w-lg w-full shadow-[0_0_50px_rgba(255,255,255,0.2)] max-h-[90vh] overflow-y-auto custom-scrollbar overscroll-y-contain">
-            <h2 className="text-3xl md:text-4xl font-black text-white text-center mb-2 tracking-widest drop-shadow-[0_0_10px_rgba(255,255,255,0.8)]">CONTACT</h2>
-            <p className="text-sm md:text-base text-gray-300 text-center mb-6 md:mb-8">You have reached the end of the universe. Send a transmission.</p>
+          <div 
+            className="bg-black/40 backdrop-blur-xl border border-white/20 p-4 md:p-10 rounded-2xl max-w-lg w-full shadow-[0_0_50px_rgba(255,255,255,0.2)] max-h-[85vh] overflow-y-auto custom-scrollbar overscroll-y-contain"
+            style={{ WebkitOverflowScrolling: 'touch' }}
+            onWheel={(e) => e.stopPropagation()}
+          >
+            <h2 className="text-2xl md:text-4xl font-black text-white text-center mb-1 md:mb-2 tracking-widest drop-shadow-[0_0_10px_rgba(255,255,255,0.8)]">CONTACT</h2>
+            <p className="text-xs md:text-base text-gray-300 text-center mb-4 md:mb-8">You have reached the end of the universe. Send a transmission.</p>
 
-            <form onSubmit={handleContactSubmit} className="space-y-3 md:space-y-4">
+            <form onSubmit={handleContactSubmit} className="space-y-2.5 md:space-y-4">
               <input type="checkbox" name="botcheck" className="hidden" style={{ display: 'none' }} />
               <div>
-                <input name="name" required placeholder="Your Name" type="text" className="w-full bg-white/10 border border-white/20 rounded-lg px-4 py-2.5 md:py-3 text-sm md:text-base text-white placeholder:text-gray-400 focus:outline-none focus:border-white transition" />
+                <input name="name" required placeholder="Your Name" type="text" className="w-full bg-white/10 border border-white/20 rounded-lg px-3 md:px-4 py-2 md:py-3 text-sm md:text-base text-white placeholder:text-gray-400 focus:outline-none focus:border-white transition" />
               </div>
               <div>
-                <input name="email" required placeholder="Your Email" type="email" className="w-full bg-white/10 border border-white/20 rounded-lg px-4 py-2.5 md:py-3 text-sm md:text-base text-white placeholder:text-gray-400 focus:outline-none focus:border-white transition" />
+                <input name="email" required placeholder="Your Email" type="email" className="w-full bg-white/10 border border-white/20 rounded-lg px-3 md:px-4 py-2 md:py-3 text-sm md:text-base text-white placeholder:text-gray-400 focus:outline-none focus:border-white transition" />
               </div>
               <div>
-                <textarea name="message" required placeholder="Message" rows={4} className="w-full bg-white/10 border border-white/20 rounded-lg px-4 py-2.5 md:py-3 text-sm md:text-base text-white placeholder:text-gray-400 focus:outline-none focus:border-white transition resize-none"></textarea>
+                <textarea name="message" required placeholder="Message" rows={3} className="w-full bg-white/10 border border-white/20 rounded-lg px-3 md:px-4 py-2 md:py-3 text-sm md:text-base text-white placeholder:text-gray-400 focus:outline-none focus:border-white transition resize-none"></textarea>
               </div>
               
               <button 
                 type="submit" 
                 disabled={formStatus === 'loading' || formStatus === 'success'}
-                className="w-full flex items-center justify-center gap-2 py-2.5 md:py-3 bg-white text-black font-bold text-sm md:text-base rounded-lg hover:bg-gray-200 transition disabled:opacity-50 disabled:cursor-not-allowed mt-2"
+                className="w-full flex items-center justify-center gap-2 py-2.5 md:py-3 bg-white text-black font-bold text-sm md:text-base rounded-lg hover:bg-gray-200 transition disabled:opacity-50 disabled:cursor-not-allowed mt-1"
               >
                 {formStatus === 'loading' ? 'Transmitting...' : formStatus === 'success' ? 'Signal Received' : (
                   <>Send Transmission <FaPaperPlane size={14} /></>

@@ -260,39 +260,39 @@ export default function SectionPanel() {
         );
       case 'contact':
         return (
-          <div className="space-y-6 flex flex-col h-full">
+          <div className="space-y-4 md:space-y-6 flex flex-col">
             <motion.h2 
               variants={glitchVariants} 
               initial="hidden" 
               animate={["visible", "glitch"]} 
-              className="text-2xl md:text-3xl font-bold text-white mb-6"
+              className="text-xl md:text-3xl font-bold text-white mb-2 md:mb-6"
             >
               Communicate
             </motion.h2>
-            <p className="text-gray-300 mb-6">
+            <p className="text-sm md:text-base text-gray-300 mb-2 md:mb-6">
               Open for opportunities in ML Engineering and Full-Stack Development. Let&apos;s build the future!
             </p>
             
-            <div className="w-full max-w-md bg-white/5 border border-white/10 p-6 rounded-xl">
-              <form onSubmit={handleContactSubmit} className="space-y-4">
+            <div className="w-full max-w-md bg-white/5 border border-white/10 p-4 md:p-6 rounded-xl">
+              <form onSubmit={handleContactSubmit} className="space-y-3 md:space-y-4">
                 <input type="checkbox" name="botcheck" className="hidden" style={{ display: 'none' }} />
                 <div>
-                  <label htmlFor="name" className="block text-sm text-gray-400 mb-1">Name</label>
-                  <input required type="text" id="name" name="name" className="w-full bg-black/50 border border-white/10 rounded-lg px-4 py-2 text-white focus:outline-none focus:border-blue-500 transition" />
+                  <label htmlFor="name" className="block text-xs md:text-sm text-gray-400 mb-1">Name</label>
+                  <input required type="text" id="name" name="name" className="w-full bg-black/50 border border-white/10 rounded-lg px-3 md:px-4 py-2 text-sm md:text-base text-white focus:outline-none focus:border-blue-500 transition" />
                 </div>
                 <div>
-                  <label htmlFor="email" className="block text-sm text-gray-400 mb-1">Email</label>
-                  <input required type="email" id="email" name="email" className="w-full bg-black/50 border border-white/10 rounded-lg px-4 py-2 text-white focus:outline-none focus:border-blue-500 transition" />
+                  <label htmlFor="email" className="block text-xs md:text-sm text-gray-400 mb-1">Email</label>
+                  <input required type="email" id="email" name="email" className="w-full bg-black/50 border border-white/10 rounded-lg px-3 md:px-4 py-2 text-sm md:text-base text-white focus:outline-none focus:border-blue-500 transition" />
                 </div>
                 <div>
-                  <label htmlFor="message" className="block text-sm text-gray-400 mb-1">Message</label>
-                  <textarea required id="message" name="message" rows={4} className="w-full bg-black/50 border border-white/10 rounded-lg px-4 py-2 text-white focus:outline-none focus:border-blue-500 transition resize-none"></textarea>
+                  <label htmlFor="message" className="block text-xs md:text-sm text-gray-400 mb-1">Message</label>
+                  <textarea required id="message" name="message" rows={3} className="w-full bg-black/50 border border-white/10 rounded-lg px-3 md:px-4 py-2 text-sm md:text-base text-white focus:outline-none focus:border-blue-500 transition resize-none"></textarea>
                 </div>
                 
                 <button 
                   type="submit" 
                   disabled={formStatus === 'loading' || formStatus === 'success'}
-                  className={`w-full flex items-center justify-center gap-2 py-3 font-bold rounded-lg transition disabled:cursor-not-allowed ${
+                  className={`w-full flex items-center justify-center gap-2 py-2.5 md:py-3 font-bold text-sm md:text-base rounded-lg transition disabled:cursor-not-allowed ${
                     formStatus === 'error' ? 'bg-red-600 hover:bg-red-500 text-white' : 'bg-blue-600 hover:bg-blue-500 text-white'
                   }`}
                 >
@@ -303,19 +303,19 @@ export default function SectionPanel() {
                   )}
                 </button>
                 {formStatus === 'success' && (
-                  <p className="text-green-400 text-sm text-center mt-2">Signal received. I will reply shortly via Gmail.</p>
+                  <p className="text-green-400 text-xs md:text-sm text-center mt-1">Signal received. I will reply shortly via Gmail.</p>
                 )}
                 {formStatus === 'error' && (
-                  <p className="text-red-400 text-sm text-center mt-2">Connection failed. Please try again.</p>
+                  <p className="text-red-400 text-xs md:text-sm text-center mt-1">Connection failed. Please try again.</p>
                 )}
               </form>
             </div>
 
-            <div className="grid grid-cols-2 gap-4 mt-4 w-full max-w-md">
-              <a href={portfolioData.contact.github} target="_blank" rel="noreferrer" className="flex items-center justify-center gap-2 py-3 bg-white/5 border border-white/20 text-white rounded-lg hover:bg-white/10 transition">
-                <FaGithub size={18} /> GitHub
+            <div className="grid grid-cols-2 gap-3 md:gap-4 mt-2 md:mt-4 w-full max-w-md pb-4">
+              <a href={portfolioData.contact.github} target="_blank" rel="noreferrer" className="flex items-center justify-center gap-2 py-2.5 md:py-3 text-sm md:text-base bg-white/5 border border-white/20 text-white rounded-lg hover:bg-white/10 transition">
+                <FaGithub size={16} /> GitHub
               </a>
-              <a href={portfolioData.contact.linkedin} target="_blank" rel="noreferrer" className="flex items-center justify-center gap-2 py-3 bg-[#0A66C2]/20 border border-[#0A66C2]/50 text-white rounded-lg hover:bg-[#0A66C2]/40 transition">
+              <a href={portfolioData.contact.linkedin} target="_blank" rel="noreferrer" className="flex items-center justify-center gap-2 py-2.5 md:py-3 text-sm md:text-base bg-[#0A66C2]/20 border border-[#0A66C2]/50 text-white rounded-lg hover:bg-[#0A66C2]/40 transition">
                 LinkedIn
               </a>
             </div>
@@ -335,19 +335,19 @@ export default function SectionPanel() {
           exit={{ opacity: 0, x: '100%' }}
           transition={{ type: 'spring', damping: 25, stiffness: 200 }}
           className="pointer-events-auto absolute right-0 top-0 h-full w-full md:w-[600px] bg-black/60 backdrop-blur-xl border-l border-white/10 z-20 overflow-y-auto custom-scrollbar overscroll-y-contain"
+          style={{ WebkitOverflowScrolling: 'touch' }}
           onWheel={(e) => e.stopPropagation()}
-          onTouchMove={(e) => e.stopPropagation()}
         >
-          <div className="p-5 md:p-8 min-h-full">
+          <div className="p-4 md:p-8 min-h-full">
             <button
               onClick={handleBack}
-              className="flex items-center gap-2 text-gray-400 hover:text-white transition mb-8 md:mb-10 group text-sm md:text-base"
+              className="flex items-center gap-2 text-gray-400 hover:text-white transition mb-6 md:mb-10 group text-sm md:text-base"
             >
               <FaArrowLeft className="group-hover:-translate-x-1 transition-transform" />
               Return to orbit
             </button>
             
-            <div className="pb-24 md:pb-20">
+            <div className="pb-8 md:pb-20">
               {renderContent()}
             </div>
           </div>
