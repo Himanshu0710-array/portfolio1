@@ -1,7 +1,7 @@
 'use client';
 
 import { Canvas } from '@react-three/fiber';
-import { OrbitControls, Environment, ScrollControls, BakeShadows, Preload } from '@react-three/drei';
+import { Environment, ScrollControls, BakeShadows, Preload, useScroll } from '@react-three/drei';
 import { EffectComposer, Bloom } from '@react-three/postprocessing';
 import * as THREE from 'three';
 import Starfield from './Starfield';
@@ -15,14 +15,26 @@ import InterstellarRocket from './InterstellarRocket';
 import EridaniPlanet from './EridaniPlanet';
 import BlackHoleOverlay from './BlackHoleOverlay';
 import DataProbe from './DataProbe';
+import WarpNode from './WarpNode';
 import { useSceneStore } from '@/store/useSceneStore';
-import { Suspense } from 'react';
+import { Suspense, useRef, useEffect } from 'react';
+
+function MobileScrollFix() {
+  const scroll = useScroll();
+  useEffect(() => {
+    if (scroll && scroll.el) {
+      scroll.el.style.pointerEvents = 'auto';
+    }
+  }, [scroll]);
+  return null;
+}
 
 export default function Scene() {
   const { activeSection } = useSceneStore();
+  const containerRef = useRef<HTMLDivElement>(null);
 
   return (
-    <div className="absolute inset-0 z-0 h-full w-full bg-[#050505]">
+    <div ref={containerRef} className="absolute inset-0 z-0 h-full w-full bg-[#050505]">
       {/* 
         This portal container is exactly the same size as the Canvas and sits outside of ScrollControls.
         This prevents HTML tags from being dragged upward when scrolling the 3D scene!
@@ -30,14 +42,18 @@ export default function Scene() {
       <div id="html-portal" className="absolute inset-0 z-50 pointer-events-none" />
       
       <Canvas
+        eventSource={containerRef}
+        eventPrefix="client"
         camera={{ position: [0, 5, 20], fov: 45 }}
         gl={{ antialias: true, alpha: false, powerPreference: "high-performance" }}
         dpr={[1, 1.5]}
+        style={{ touchAction: 'pan-y' }}
       >
         <color attach="background" args={['#020617']} />
         
         <Suspense fallback={null}>
           <ScrollControls pages={4} damping={0.1}>
+            <MobileScrollFix />
             <Environment preset="night" />
             <ambientLight intensity={0.5} />
             <directionalLight position={[10, 10, 5]} intensity={1} color="#ffffff" castShadow />
@@ -86,6 +102,9 @@ export default function Scene() {
                 speed={0.9} 
                 orbitOffset={(Math.PI * 2) / 3} 
               />
+              
+              {/* Warp to Eridani */}
+              <WarpNode position={[8, -3, 8]} targetOffset={0.6} label="Warp to Eridani System" color="#a855f7" />
             </group>
 
             <group position={[0, 0, -100]}>
@@ -102,6 +121,10 @@ export default function Scene() {
                 size={0.6}
                 hasRing
               />
+              
+              {/* Warp points from Eridani */}
+              <WarpNode position={[-7, 4, 5]} targetOffset={0} label="Return to Solar System" color="#3b82f6" />
+              <WarpNode position={[7, -4, -10]} targetOffset={1} label="Warp to Black Hole" color="#ef4444" />
             </group>
 
             <group position={[0, 0, -150]}>
@@ -133,6 +156,10 @@ export default function Scene() {
                 <meshBasicMaterial color="#ffffff" toneMapped={false} />
               </mesh>
               <pointLight position={[0, 0, -5]} distance={30} intensity={5} color="#ffffff" />
+              
+              {/* Escape Warp Nodes (placed behind the black hole so they are visible when camera passes through) */}
+              <WarpNode position={[-6, 2, -28]} targetOffset={0.6} label="Escape to Eridani" color="#a855f7" />
+              <WarpNode position={[6, -2, -28]} targetOffset={0} label="Escape to Solar System" color="#3b82f6" />
             </group>
 
             <CameraRig />
@@ -145,17 +172,6 @@ export default function Scene() {
 
           <BakeShadows />
           <Preload all />
-
-          {!activeSection && (
-            <OrbitControls
-              enablePan={false}
-              enableZoom={false}
-              minPolarAngle={Math.PI / 3}
-              maxPolarAngle={Math.PI / 1.5}
-              autoRotate
-              autoRotateSpeed={0.5}
-            />
-          )}
         </Suspense>
       </Canvas>
     </div>
