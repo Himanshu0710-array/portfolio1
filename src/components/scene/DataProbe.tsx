@@ -59,7 +59,15 @@ export default function DataProbe({ id, position }: DataProbeProps) {
         <meshBasicMaterial color="#ffffff" />
       </mesh>
 
-      <Html position={[0, 0.8, 0]} center className="pointer-events-none">
+      <Html
+        position={[0, 0.8, 0]}
+        center
+        transform
+        sprite
+        distanceFactor={15}
+        portal={{ current: document.getElementById('html-portal') as HTMLElement }}
+        wrapperClass="pointer-events-none"
+      >
         <div className={`transition-opacity duration-300 ${hovered ? 'opacity-100' : 'opacity-0'}`}>
           <div className="bg-blue-900/80 border border-blue-400 text-blue-100 px-3 py-1 rounded-md text-xs whitespace-nowrap backdrop-blur-sm">
             [ Collect Data Probe ]

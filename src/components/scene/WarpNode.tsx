@@ -1,9 +1,10 @@
 'use client';
 
-import { useRef, useState } from 'react';
-import { useFrame } from '@react-three/fiber';
+import { useRef, useState, useEffect } from 'react';
+import { useFrame, useThree } from '@react-three/fiber';
 import { useScroll, Html } from '@react-three/drei';
 import * as THREE from 'three';
+import { createPortal } from 'react-dom';
 
 interface WarpNodeProps {
   position: [number, number, number];
@@ -16,11 +17,22 @@ export default function WarpNode({ position, targetOffset, label, color = '#3b82
   const groupRef = useRef<THREE.Group>(null);
   const ringRef = useRef<THREE.Mesh>(null);
   const [hovered, setHovered] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
   const scroll = useScroll();
+  const { camera } = useThree();
 
   useFrame((state, delta) => {
     if (groupRef.current) {
       groupRef.current.rotation.y += delta * 0.5;
+
+      // Check distance to camera for visibility
+      const worldPos = new THREE.Vector3();
+      groupRef.current.getWorldPosition(worldPos);
+      const dist = camera.position.distanceTo(worldPos);
+      const shouldBeVisible = dist < 80;
+      if (shouldBeVisible !== isVisible) {
+        setIsVisible(shouldBeVisible);
+      }
     }
     if (ringRef.current) {
       ringRef.current.rotation.x -= delta * 0.8;
@@ -91,10 +103,19 @@ export default function WarpNode({ position, targetOffset, label, color = '#3b82
 
       <pointLight distance={10} intensity={hovered ? 2 : 1} color={color} />
 
-      <Html position={[0, 2.5, 0]} center className="pointer-events-none">
-        <div className={`transition-opacity duration-300 ${hovered ? 'opacity-100' : 'opacity-80'}`}>
+      {isVisible && (
+        <Html
+          position={[0, 2.5, 0]}
+          center
+          transform
+          sprite
+          distanceFactor={15}
+          portal={{ current: document.getElementById('html-portal') as HTMLElement }}
+          wrapperClass="pointer-events-none"
+        >
           <div 
-            className="px-4 py-2 rounded-full text-xs md:text-sm font-bold whitespace-nowrap backdrop-blur-md shadow-[0_0_15px_rgba(255,255,255,0.2)]"
+            onClick={handleWarp}
+            className={`pointer-events-auto cursor-pointer px-4 py-2 rounded-full text-xs md:text-sm font-bold whitespace-nowrap backdrop-blur-md shadow-[0_0_15px_rgba(255,255,255,0.2)] transition-opacity duration-300 ${hovered ? 'opacity-100' : 'opacity-80'}`}
             style={{ 
               backgroundColor: 'rgba(0, 0, 0, 0.7)',
               border: `1px solid ${color}`,
@@ -103,8 +124,8 @@ export default function WarpNode({ position, targetOffset, label, color = '#3b82
           >
             {label}
           </div>
-        </div>
-      </Html>
+        </Html>
+      )}
     </group>
   );
 }

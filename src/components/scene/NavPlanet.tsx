@@ -135,6 +135,7 @@ export default function NavPlanet({
             transform
             sprite
             distanceFactor={15}
+            portal={{ current: document.getElementById('html-portal') as HTMLElement }}
             wrapperClass="pointer-events-none"
           >
             <div
