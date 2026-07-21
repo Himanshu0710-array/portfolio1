@@ -37,7 +37,7 @@ export default function DotNav() {
   if (!isLoaded || activeSection) return null;
 
   return (
-    <div className="fixed right-3 md:right-6 top-1/2 -translate-y-1/2 z-30 pointer-events-auto flex flex-col items-end gap-3 md:gap-4">
+    <div className="fixed right-3 md:right-6 top-1/2 -translate-y-1/2 z-40 pointer-events-auto flex flex-col items-end gap-3 md:gap-4">
       {NAV_SECTIONS.map((section) => {
         const isActive = currentSection === section.id;
         const isHovered = hoveredId === section.id;
