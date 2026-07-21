@@ -103,8 +103,8 @@ export default function Scene() {
                 orbitOffset={(Math.PI * 2) / 3} 
               />
               
-              {/* Warp to Eridani */}
-              <WarpNode position={[8, -3, 8]} targetOffset={0.6} label="Warp to Eridani System" color="#a855f7" />
+              {/* Warp to Eridani - placed below and ahead of the hero planet, centered for mobile */}
+              <WarpNode position={[0, -2, -5]} targetOffset={0.6} label="Warp to Eridani System" color="#a855f7" />
             </group>
 
             <group position={[0, 0, -100]}>
@@ -122,9 +122,9 @@ export default function Scene() {
                 hasRing
               />
               
-              {/* Warp points from Eridani */}
-              <WarpNode position={[-7, 4, 5]} targetOffset={0} label="Return to Solar System" color="#3b82f6" />
-              <WarpNode position={[7, -4, -10]} targetOffset={1} label="Warp to Black Hole" color="#ef4444" />
+              {/* Warp points from Eridani - centered for mobile visibility */}
+              <WarpNode position={[-3, 2, 8]} targetOffset={0} label="Return to Solar System" color="#3b82f6" />
+              <WarpNode position={[3, -2, -8]} targetOffset={1} label="Warp to Black Hole" color="#ef4444" />
             </group>
 
             <group position={[0, 0, -150]}>
@@ -157,9 +157,9 @@ export default function Scene() {
               </mesh>
               <pointLight position={[0, 0, -5]} distance={30} intensity={5} color="#ffffff" />
               
-              {/* Escape Warp Nodes (placed behind the black hole so they are visible when camera passes through) */}
-              <WarpNode position={[-6, 2, -28]} targetOffset={0.6} label="Escape to Eridani" color="#a855f7" />
-              <WarpNode position={[6, -2, -28]} targetOffset={0} label="Escape to Solar System" color="#3b82f6" />
+              {/* Escape Warp Nodes - centered and placed after the white hole so camera sees them */}
+              <WarpNode position={[-2, 1, -25]} targetOffset={0.6} label="Escape to Eridani" color="#a855f7" />
+              <WarpNode position={[2, -1, -25]} targetOffset={0} label="Escape to Solar System" color="#3b82f6" />
             </group>
 
             <CameraRig />
